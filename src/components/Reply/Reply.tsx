@@ -2,45 +2,40 @@ import React, { ChangeEvent } from 'react';
 import { IoMicOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
 import { CiFaceSmile } from "react-icons/ci";
+import { connect } from 'react-redux'; // Import connect
+import { addMessage } from '../../Redux/Chat/action';
 
 export type messageType = {
   message: string,
-        type:boolean
+  type: boolean
 }
 
 type propsType = {
   inputMsg: string;
-  messages: any;
-  setMessages: any;
   setInputMsg: any;
+  addMessage: (message: messageType) => void; // Prop for addMessage action
 }
 
-
-
-const Reply = ({ inputMsg, messages, setMessages, setInputMsg }: propsType) => {
-
+const Reply = ({ inputMsg,setInputMsg, addMessage }: propsType) => {
 
   const handleSendMessage = () => {
-
     if (inputMsg.trim() !== '') {
-
-      const message: messageType  = {
+      // Dispatch addMessage action
+      addMessage({
         message: inputMsg.trim(),
-        type: true
+        type: true,
+      });
 
-      };
-      const newMessage: messageType = {
+      addMessage({
         message: 'How can I help you?',
-        type: false
+        type: false,
+      });
 
-      };
-      setMessages([...messages, message, newMessage]);
-      setInputMsg('')
+      setInputMsg(''); // Clear input after sending message
     }
-
   };
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
       handleSendMessage();
     }
@@ -52,16 +47,15 @@ const Reply = ({ inputMsg, messages, setMessages, setInputMsg }: propsType) => {
         <CiFaceSmile size={24} />
       </div>
       <div className="col-sm-9 col-xs-9 reply-main">
-      <textarea
-  className="form-control"
-  rows={1}
-  id="comment"
-  value={inputMsg}
-  onChange={(e) => setInputMsg(e.target.value)}
-  onKeyPress={handleKeyPress} // Add onKeyPress event handler
-  placeholder="Type a message..."
-/>
-
+        <textarea
+          className="form-control"
+          rows={1}
+          id="comment"
+          value={inputMsg}
+          onChange={(e) => setInputMsg(e.target.value)}
+          onKeyPress={handleKeyPress} // Add onKeyPress event handler
+          placeholder="Type a message..."
+        />
       </div>
       <div className="col-sm-1 col-xs-1 reply-recording">
         <IoMicOutline size={24} />
@@ -73,4 +67,5 @@ const Reply = ({ inputMsg, messages, setMessages, setInputMsg }: propsType) => {
   );
 };
 
-export default Reply;
+// Connect the component to Redux store
+export default connect(null, { addMessage })(Reply);

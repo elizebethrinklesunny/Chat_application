@@ -16,7 +16,7 @@ export interface conversationType {
 
 function App() {
 
-  const [messages, setMessages] = useState([]);
+
   const [inputMsg, setInputMsg] = useState('');
   const [searchdata ,setsearchdata] =useState<Array<conversationType>>([]);
   const [chatname,setchatname]=useState("")
@@ -67,8 +67,8 @@ function App() {
       <div className="side-two">
       <div className="col-sm-8 conversation">
         <Chatheading chatname={chatname}/>
-        <Chatspace messages={messages}/>
-        <Reply messages={messages} setMessages={setMessages} inputMsg={inputMsg} setInputMsg={setInputMsg}/>
+        <Chatspace/>
+        <Reply inputMsg={inputMsg} setInputMsg={setInputMsg}/>
       </div>
       </div>
     </div>

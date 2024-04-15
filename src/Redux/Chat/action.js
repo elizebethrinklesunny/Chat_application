@@ -4,7 +4,10 @@ export const actionType = {
   CHAT_HISTORY_ERROR: "CHAT_HISTORY_ERROR",
 
 
-};
+}
+export const ADD_MESSAGE = 'ADD_MESSAGE';
+export const RESET_INPUT_MSG = 'RESET_INPUT_MSG';
+
 
 export const chat = (payload) => {
   return {
@@ -27,3 +30,11 @@ export const chatError = (payload) => {
   };
 };
 
+export const addMessage = (message) => ({
+  type: ADD_MESSAGE,
+  payload: message,
+});
+
+export const resetInputMsg = () => ({
+  type: RESET_INPUT_MSG,
+});
